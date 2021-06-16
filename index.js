@@ -15,8 +15,8 @@ var counter = 0;
 var folder = process.cwd()
 // Create a writeable stream to redirect stderr to file - if it logs to stdout, then pandoc hangs due to improper json.
 // errorLog is used in pandoc.toJSONFilter
-var errFile = path.join(folder,  "mermaid-filter.err");
-var errorLog = fs.createWriteStream(errFile);
+//var errFile = path.join('.',  "mermaid-filter.err");
+//var errorLog = fs.createWriteStream(errFile);
 
 // console.log(folder)
 function mermaid(type, value, format, meta) {
@@ -98,7 +98,7 @@ function mermaid(type, value, format, meta) {
     }
 
     var fig = "";
-    
+
     if (options.caption == "rawmm") {
         return pandoc.Plain([pandoc.RawInline('html', data)]);
     } else if (options.caption != "") {
@@ -143,7 +143,7 @@ function firstExisting(paths, error) {
 }
 
 pandoc.toJSONFilter(function(type, value, format, meta) {
-	// Redirect stderr to a globally created writeable stream
+    // Redirect stderr to a globally created writeable stream
     //process.stderr.write = errorLog.write.bind(errorLog);
     return mermaid(type, value, format, meta);
 });
